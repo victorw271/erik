@@ -23,3 +23,17 @@ jobs:
           cml-publish mindaffectBCI_decoding_curve.png --md >> report.md
           
           cml-send-comment report.md
+      - uses: gr2m/write-csv-file-action@v1.x
+        with:
+          path: metrics.csv
+          columns: IntLen, Perr, Perr(est), StopErr, StopThresh(P), Ave-score
+          "Perr": g
+          "Perr(est)": y
+          "StopErr": h
+          "StopThresh(P)": g
+          "Ave-score": a
+      
+          
+
+
+
