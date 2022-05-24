@@ -222,10 +222,17 @@ def analyse_datasets(dataset:str, model:str='cca', dataset_args:dict=None, loade
     plt.savefig("{}_decoding_curve.png".format(dataset))
     plt.show()
 
-    with open('metrics.txt', 'a') as outfile:
-        outfile.write("\n--------\n\n Ave-score={}\n".format(avescore))
-        outfile.write("Ave-DC\n{}\n".format(print_decoding_curve(np.nanmean(int_len,0),np.nanmean(prob_err,0),np.nanmean(prob_err_est,0),np.nanmean(se,0),np.nanmean(st,0))))
+    header = ['IntLen', 'Perr', 'Perr(est)', 'StopErr', 'StopThresh(P)', 'Ave-score']
+    data_int = np.array([np.nanmean(int_len,0),np.nanmean(prob_err,0),np.nanmean(prob_err_est,0),np.nanmean(se,0),np.nanmean(st,0)]).transpose()
+    data_string = np.array2string(data_int)
 
+# Write metrics to file
+    with open('metrics.csv', 'w', encoding='UTF8', newline='') as outfile:
+      writer = csv.writer(outfile)
+      writer.writerow(header)
+      writer.writerows(data_string)
+    
+    
 def analyse_train_test(X:np.ndarray, Y:np.ndarray, coords, splits=1, label:str='', model:str='cca', tau_ms:float=300, fs:float=None,  rank:int=1, evtlabs=None, preprocess_args=None, clsfr_args:dict=None,  **kwargs):    
     """analyse effect of different train/test splits on performance and generate a summary decoding plot.
 
