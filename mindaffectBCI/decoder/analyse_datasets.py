@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pymindaffectBCI.  If not, see <http://www.gnu.org/licenses/>
 
+import csv
 import numpy as np
 import sklearn
 from mindaffectBCI.decoder.datasets import get_dataset
